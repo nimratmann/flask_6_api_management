@@ -10,7 +10,7 @@ weight_value = df[:1]['weight'][0]
 height_value = df[:1]['height'][0]
 
 # Fill in your Azure Function URL
-azure_function_url = 'https://your-azure-function-url-here'
+azure_function_url = 'https://mannapp.azurewebsites.net/api/bmi'
 
 analysis = requests.get(
     url=azure_function_url,
