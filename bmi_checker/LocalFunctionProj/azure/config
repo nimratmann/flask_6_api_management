@@ -1,0 +1,6 @@
+[defaults]
+group = nimrat_mann
+sku = B1
+appserviceplan = WestEuropeLinuxDynamicPlan (Y1: 0)
+location = West Europe
+web = MannApp
