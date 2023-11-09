@@ -63,12 +63,84 @@ Replace value with your desired value. You can add multiple query parameters by 
 
 
 
-
-
-
 ## Azure API Deployment
+1. Install Azure Functions Core Tools using the following command:
+```
+sudo apt-get install azure-functions-core-tools-4
+```
+2. Create a Local Function:
+Navigate to your project's directory, and run the following command to create a local function project:
+```
+func init LocalFunctionProj --python -m V2
+```
+This command will create a folder containing various files, including a .py file to run your app.
 
+3. Edit the function_app.py file within the LocalFunctionProj folder and add your desired functions. The syntax is similar to Flask but not identical. Here's an example:
 
+```
+import azure.functions as func
+
+app = func.FunctionApp()
+
+@app.function_name(name="HttpExample")
+@app.route(route="hello")
+def test_function(req: func.HttpRequest) -> func.HttpResponse:
+    return func.HttpResponse("HttpExample function processed a request!")
+```
+4. Run Your Function Locally using the following command:
+```
+func start
+```
+This will start a local development server, and you can test your API requests using the endpoints and variables specified in your function.
+
+5. Create Azure Resources:
+
+In Azure, create the necessary resources to host your app, including a resource group, a storage account, and an Azure Function App. You can create these resources using Azure CLI commands:
+
+Create a resource group:
+```
+az group create --name (ResourceGroupName) --location (Region)
+```
+Create a storage account:
+```
+az storage account create --name (StorageAccountName) --location (Region) --resource-group (ResourceGroupName) --sku Standard_LRS
+```
+Create an Azure Function App:
+
+```
+az functionapp create --resource-group (ResourceGroupName) --consumption-plan-location (Region) --runtime python --runtime-version 3.9 --functions-version 4 --name (AppName) --os-type linux --storage-account (StorageAccountName)
+```
+6. Update Local Settings:
+
+In the local.settings.json file within the LocalFunctionProj folder, replace the "AzureWebJobsStorage" value with the connection string value for your storage account.
+
+Here's an example local.settings.json:
+```
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "AzureWebJobsStorage": "your_connection_string_here"
+  }
+}
+```
+7. Deploy Your App:
+
+Deploy your app using the following command, replacing (AppName) with the name of your Azure Function App:
+
+```
+func azure functionapp publish (AppName)
+```
+8. Update App Settings:
+
+To update the app settings, run the following command, replacing (FUNCTION_APP_NAME) and (RESOURCE_GROUP_NAME) with your specific values:
+```
+az functionapp config appsettings set --name (FUNCTION_APP_NAME) --resource-group (RESOURCE_GROUP_NAME) --settings AzureWebJobsFeatureFlags=EnableWorkerIndexing
+```
+
+You've successfully deployed an Azure Function API. Your API should now be available on Azure, and you can access it through the specified endpoint.
+Azure API Deployment Link: [https://mannapp.azurewebsites.net](https://mannapp.azurewebsites.net/api/bmi)
 
 ## Open API
 
