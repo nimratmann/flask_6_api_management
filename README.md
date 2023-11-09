@@ -142,9 +142,11 @@ az functionapp config appsettings set --name (FUNCTION_APP_NAME) --resource-grou
 You've successfully deployed an Azure Function API. Your API should now be available on Azure, and you can access it through the specified endpoint.
 Azure API Deployment Link: [https://mannapp.azurewebsites.net](https://mannapp.azurewebsites.net/api/bmi)
 
-## Open API
-
 
 
 ## Errors
+After I successfully created a function project and added an HTTP-triggered function, I attempted to start the Azurite storage emulator with the command ```azurite```. However, it seemed that the "azurite" command was not recognized in my Cloud Shell environment. Therefore, I had to first install Azurite using npm and the following command ```npm install -g azurite```. After this step, I was able to successfully run my function by starting the local Azure Functions runtime host from the LocalFunctionProj folder with the ```func start``` command.
+
+
+
 
